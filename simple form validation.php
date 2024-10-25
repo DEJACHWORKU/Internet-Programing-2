@@ -104,7 +104,7 @@ if (isset($_REQUEST['submit'])) {
 <body>
     <div class="container">
 <div class="table-responsive">
-<h3 style="text-align: center;">Student Registration Form</h3><br/>
+<h3 style="text-align: center;">student</h3><br/>
     <div class="box">
 <form id="validate_form" method="post">
     <div class="form-group">
