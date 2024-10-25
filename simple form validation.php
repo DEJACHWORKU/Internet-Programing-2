@@ -58,7 +58,7 @@ if (isset($_REQUEST['submit'])) {
         $mobile_error = "Please enter the Mobile Number";
         $error = 1;
     } else if (!preg_match("/^\d{10}$/", $mobile)) {
-        $mobile_error = "Mobile number must be 10 digits";
+        $mobile_error = "Mobile number must be 10 and above digits";
         $error = 1;
     }
     if (empty($id_number)) {
@@ -79,8 +79,8 @@ if (isset($_REQUEST['submit'])) {
     if (empty($password)) {
         $password_error = "Please enter the Password";
         $error = 1;
-    } else if (strlen($password) < 6) {
-        $password_error = "Password must be at least 6 characters";
+    } else if (strlen($password) < 8) {
+        $password_error = "Password must be at least 8 characters";
         $error = 1;
     }
     if ($password !== $confirm_password) {
