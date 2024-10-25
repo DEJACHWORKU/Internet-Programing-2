@@ -8,7 +8,7 @@
         width: 100%;
         max-width: 600px;
         background-color: #f9f9f9;
-        border: 1px solid #ccc;
+        border: 3px solid green;
         border-radius: 5px;
         padding: 16px;
         margin: 0 auto;
@@ -65,6 +65,10 @@ if (isset($_REQUEST['submit'])) {
         $id_error = "Please enter the ID Number";
         $error = 1;
     }
+    else if (!preg_match("/^(?=.*\/)[a-zA-Z0-9-/]+$/", $id_number)) {
+        $id_error = "your id must be include letter slash and number";
+        $error = 1;
+    }
     if (empty($age)) {
         $age_error = "Please enter the Age";
         $error = 1;
@@ -76,10 +80,11 @@ if (isset($_REQUEST['submit'])) {
         $sex_error = "Please select the Sex";
         $error = 1;
     }
+   
     if (empty($password)) {
         $password_error = "Please enter the Password";
         $error = 1;
-    } else if (strlen($password) < 8) {
+    } else if (strlen($password) <8) {
         $password_error = "Password must be at least 8 characters";
         $error = 1;
     }
@@ -103,7 +108,7 @@ if (isset($_REQUEST['submit'])) {
     <div class="box">
 <form id="validate_form" method="post">
     <div class="form-group">
-<label for="name">Name</label>
+<label for="name">Full Name</label>
  <input type="text" name="name" placeholder="Enter Name" class="form-control" value="<?php if(isset($name)){ echo htmlspecialchars($name); }?>"/>
 <span class="text-danger"><?php if(!empty($name_error)){ echo $name_error; } ?></span>
 </div>
@@ -149,7 +154,7 @@ if (isset($_REQUEST['submit'])) {
 </div>
 
 <div class="form-group">
-<label for="sex">sex</label>
+<label for="sex">Gender</label>
 <select name="sex" class="form-control">
      <option value="">Select</option>
 <option value="Male" <?php if(isset($sex) && $sex == "Male"){ echo 'selected'; }?>>Male</option>
