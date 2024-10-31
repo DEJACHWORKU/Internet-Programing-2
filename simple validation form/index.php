@@ -120,16 +120,7 @@ if (isset($_REQUEST['submit'])) {
   <span class="text-danger"><?php if(!empty($email_error)){ echo $email_error; } ?></span>
     </div>
 
- <div class="form-group">
- <label for="password">Password</label>
-<input type="password" name="password" placeholder="Enter Password" class="form-control" />
-<span class="text-danger"><?php if(!empty($password_error)){ echo $password_error; } ?></span>
-</div>
-<div class="form-group">
-<label for="confirm_password">Confirm Password</label>
-<input type="password" name="confirm_password" placeholder="Confirm Password" class="form-control" />
-<span class="text-danger"><?php if(!empty($confirm_password_error)){ echo $confirm_password_error; } ?></span>
-</div>
+
 
 <div class="form-group">
 <label for="mobile">Mobile No.</label>
