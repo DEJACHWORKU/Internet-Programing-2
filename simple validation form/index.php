@@ -103,7 +103,7 @@ if (isset($_REQUEST['submit'])) {
     <div class="box">
 <form id="validate_form" method="post">
     <div class="form-group">
-<label for="name">Name</label>
+<label for="name">Full Name</label>
  <input type="text" name="name" placeholder="Enter Name" class="form-control" value="<?php if(isset($name)){ echo htmlspecialchars($name); }?>"/>
 <span class="text-danger"><?php if(!empty($name_error)){ echo $name_error; } ?></span>
 </div>
