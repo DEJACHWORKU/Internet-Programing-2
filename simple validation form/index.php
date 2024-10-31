@@ -14,7 +14,7 @@
         margin: 0 auto;
     }
     .error {
-        color: red;
+        color: green;
         font-weight: 700;
     }
 </style>
@@ -58,15 +58,11 @@ if (isset($_REQUEST['submit'])) {
         $mobile_error = "Please enter the Mobile Number";
         $error = 1;
     } else if (!preg_match("/^\d{10}$/", $mobile)) {
-        $mobile_error = "Mobile number must be 10 and above digits";
+        $mobile_error = "Mobile number must be 10 digits";
         $error = 1;
     }
     if (empty($id_number)) {
         $id_error = "Please enter the ID Number";
-        $error = 1;
-    }
-    else if (!preg_match("/^(?=.*\/)[a-zA-Z0-9-/]+$/", $id_number)) {
-        $id_error = "your id must be include letter slash and number";
         $error = 1;
     }
     if (empty($age)) {
@@ -80,12 +76,11 @@ if (isset($_REQUEST['submit'])) {
         $sex_error = "Please select the Sex";
         $error = 1;
     }
-   
     if (empty($password)) {
         $password_error = "Please enter the Password";
         $error = 1;
-    } else if (strlen($password) <8) {
-        $password_error = "Password must be at least 8 characters";
+    } else if (strlen($password) < 6) {
+        $password_error = "Password must be at least 6 characters";
         $error = 1;
     }
     if ($password !== $confirm_password) {
@@ -108,7 +103,7 @@ if (isset($_REQUEST['submit'])) {
     <div class="box">
 <form id="validate_form" method="post">
     <div class="form-group">
-<label for="name">Full Name</label>
+<label for="name">Name</label>
  <input type="text" name="name" placeholder="Enter Name" class="form-control" value="<?php if(isset($name)){ echo htmlspecialchars($name); }?>"/>
 <span class="text-danger"><?php if(!empty($name_error)){ echo $name_error; } ?></span>
 </div>
@@ -154,7 +149,7 @@ if (isset($_REQUEST['submit'])) {
 </div>
 
 <div class="form-group">
-<label for="sex">Gender</label>
+<label for="sex">sex</label>
 <select name="sex" class="form-control">
      <option value="">Select</option>
 <option value="Male" <?php if(isset($sex) && $sex == "Male"){ echo 'selected'; }?>>Male</option>
