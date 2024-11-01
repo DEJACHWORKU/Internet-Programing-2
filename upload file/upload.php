@@ -7,12 +7,12 @@ if (!is_dir($targetDir)) {
 
 $files = scandir($targetDir);
 
-// Handle file upload
+// file upload
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['file'])) {
     $fileName = basename($_FILES["file"]["name"]);
     $targetFile = $targetDir . $fileName;
 
-    // Check if file already exists
+    //  file already exists
     if (file_exists($targetFile)) {
         echo "<div class='alert error'>File already exists. Please choose a different file.</div>";
     } else {
@@ -87,46 +87,48 @@ if (isset($_POST['write'])) {
     <div class="container">
         <h1>File Upload internet program-2 second assignment</h1>
         <form action="" method="post" enctype="multipart/form-data" class="upload-form">
-            <input type="file" name="file" required>
-            <button type="submit">Upload</button>
-        </form>
+ <input type="file" name="file" required>
+ <button type="submit">Upload</button>
+</form>
 
-        <h2> Files Uploaded </h2>
-        <ul class="file-list">
-            <?php if (count($files) > 2): // Check if there are uploaded files ?>
-                <?php foreach ($files as $file): ?>
-                    <?php if ($file !== '.' && $file !== '..'): ?>
-                        <li>
-                            <?php echo htmlspecialchars($file); ?>
-                            <a class="btn" href="?action=read&file=<?php echo urlencode($file); ?>">Read</a>
-                            <a class="btn" href="#" onclick="document.getElementById('rename-form').style.display='block'; document.getElementById('old-name').value='<?php echo htmlspecialchars($file); ?>';">Rename</a>
-                            <a class="btn" href="?action=delete&file=<?php echo urlencode($file); ?>">Delete</a>
-                            <a class="btn" href="#" onclick="document.getElementById('write-form').style.display='block'; document.getElementById('write-file').value='<?php echo htmlspecialchars($file); ?>';">Write</a>
-                        </li>
-                    <?php endif; ?>
-                <?php endforeach; ?>
-            <?php else: ?>
-                <li>No files uploaded yet.</li>
-            <?php endif; ?>
-        </ul>
+ <h2> Files Uploaded </h2>
+ <ul class="file-list">
+<?php if (count($files) > 2): ?>
+<?php foreach ($files as $file): ?>
+<?php if ($file !== '.' && $file !== '..'): ?>
+                        
+    <li>
+<?php echo htmlspecialchars($file); ?>
+<a class="btn" href="?action=read&file=<?php echo urlencode($file); ?>">Read</a>
+<a class="btn" href="#" onclick="document.getElementById('rename-form').style.display='block'; document.getElementById('old-name').value='<?php echo htmlspecialchars($file); ?>';">Rename</a>
+<a class="btn" href="?action=delete&file=<?php echo urlencode($file); ?>">Delete</a>
+<a class="btn" href="#" onclick="document.getElementById('write-form').style.display='block'; document.getElementById('write-file').value='<?php echo htmlspecialchars($file); ?>';">Write</a>
+</li>
 
-        <div id="rename-form" class="rename-form" style="display:none;">
-            <h2>Rename File</h2>
-            <form action="" method="post">
-                <input type="hidden" name="old_name" id="old-name">
-                <input type="text" name="new_name" placeholder="New file name" required>
-                <button type="submit" name="rename">Rename</button>
-            </form>
-        </div>
+<?php endif; ?>
+<?php endforeach; ?>
+<?php else: ?>
+<li>No files uploaded yet.</li>
+<?php endif; ?>
+</ul>
 
-        <div id="write-form" class="write-form" style="display:none;">
-            <h2>Write to File</h2>
-            <form action="" method="post">
-                <input type="hidden" name="write_file" id="write-file">
-                <textarea name="file_content" placeholder="Write your content here..." required></textarea>
-                <button type="submit" name="write">Write</button>
-            </form>
-        </div>
+<div id="rename-form" class="rename-form" style="display:none;">
+<h2>Rename File</h2>
+<form action="" method="post">
+<input type="hidden" name="old_name" id="old-name">
+<input type="text" name="new_name" placeholder="New file name" required>
+<button type="submit" name="rename">Rename</button>
+</form>
+</div>
+
+<div id="write-form" class="write-form" style="display:none;">
+<h2>Write to File</h2>
+<form action="" method="post">
+<input type="hidden" name="write_file" id="write-file">
+<textarea name="file_content" placeholder="Write your content here..." required></textarea>
+<button type="submit" name="write">Write</button>
+ </form>
+</div>
 
         <?php if ($content): ?>
             <h2>File Content</h2>
