@@ -99,10 +99,10 @@ if (isset($_POST['write'])) {
                         
     <li>
 <?php echo htmlspecialchars($file); ?>
-<a class="btn" href="?action=read&file=<?php echo urlencode($file); ?>">Read</a>
-<a class="btn" href="#" onclick="document.getElementById('rename-form').style.display='block'; document.getElementById('old-name').value='<?php echo htmlspecialchars($file); ?>';">Rename</a>
-<a class="btn" href="?action=delete&file=<?php echo urlencode($file); ?>">Delete</a>
-<a class="btn" href="#" onclick="document.getElementById('write-form').style.display='block'; document.getElementById('write-file').value='<?php echo htmlspecialchars($file); ?>';">Write</a>
+<a class="btn" href="?action=read&file=<?php echo urlencode($file); ?>">Read to file</a>
+<a class="btn" href="#" onclick="document.getElementById('rename-form').style.display='block'; document.getElementById('old-name').value='<?php echo htmlspecialchars($file); ?>';">Rename to file</a>
+<a class="btn" href="?action=delete&file=<?php echo urlencode($file); ?>">Delete to file</a>
+<a class="btn" href="#" onclick="document.getElementById('write-form').style.display='block'; document.getElementById('write-file').value='<?php echo htmlspecialchars($file); ?>';">Write to file</a>
 </li>
 
 <?php endif; ?>
@@ -126,7 +126,7 @@ if (isset($_POST['write'])) {
 <form action="" method="post">
 <input type="hidden" name="write_file" id="write-file">
 <textarea name="file_content" placeholder="Write your content here..." required></textarea>
-<button type="submit" name="write">Write</button>
+<button type="submit" name="write">Write </button>
  </form>
 </div>
 
