@@ -1,185 +1,129 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    <title>Registration form</title>
-    <link rel="stylesheet" href="validform.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LOGIN</title>
+    <link rel="stylesheet" href="style.css">
 </head>
-
-<?php
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
-
-$error = 0;
-
-if (isset($_REQUEST['submit'])) {
-    $name = $_REQUEST['name'];
-    $dob = $_REQUEST['dob'];
-    $email = $_REQUEST['email'];
-    $mobile = $_REQUEST['mobile'];
-    $id_number = $_REQUEST['id_number'];
-    $age = $_REQUEST['age'];
-    $sex = $_REQUEST['sex'];
-    $country = $_REQUEST['country'];
-    $born_city = $_REQUEST['born_city'];
-    $password = $_REQUEST['password'];
-    $confirm_password = $_REQUEST['confirm_password'];
-
-    if (empty($name)) {
-        $name_error = "Please enter the Name";
-        $error = 1;
-    } else if (!preg_match("/^[a-zA-Z ]*$/", $name)) {
-        $name_error = "Only letters are allowed";
-        $error = 1;
-    }
-    if (empty($dob)) {
-        $dob_error = "Please enter the Date of Birth";
-        $error = 1;
-    }
-    if (empty($email)) {
-        $email_error = "Please enter the Email Id";
-        $error = 1;
-    } else if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        $email_error = "Invalid Email Format";
-        $error = 1;
-    }
-    if (empty($mobile)) {
-        $mobile_error = "Please enter the Mobile Number";
-        $error = 1;
-    } else if (!preg_match("/^\d{10}$/", $mobile)) {
-        $mobile_error = "Mobile number must be 10 digits";
-        $error = 1;
-    }
-    if (empty($id_number)) {
-        $id_error = "Please enter the ID Number";
-        $error = 1;
-    }
-    if (empty($age)) {
-        $age_error = "Please enter the Age";
-        $error = 1;
-    } else if (!is_numeric($age) || $age <= 0) {
-        $age_error = "Age must be a positive number";
-        $error = 1;
-    }
-    if (empty($sex)) {
-        $sex_error = "Please select the Sex";
-        $error = 1;
-    }
-    if (empty($country)) {
-        $country_error = "Please enter the Country";
-        $error = 1;
-    }
-    if (empty($born_city)) {
-        $born_city_error = "Please enter the Born City";
-        $error = 1;
-    }
-    if (empty($password)) {
-        $password_error = "Please enter the Password";
-        $error = 1;
-    } else if (strlen($password) < 6) {
-        $password_error = "Password must be at least 6 characters";
-        $error = 1;
-    }
-    if ($password !== $confirm_password) {
-        $confirm_password_error = "Passwords do not match";
-        $error = 1;
-    }
-
-    if ($error == 0) {
-        $msg = "Registration successful";
-    } else {
-        $msg = "Please fill all fields correctly";
-    }
-}
-?>
 <body>
-    <div class="container">
- <div class="table-responsive">
-<h3 style="text-align: center;">Student Registration Form</h3><br/>
+    <?php
+    error_reporting(E_ALL);
+    ini_set('display_errors', 1);
 
+    $host = 'localhost'; 
+    $username = 'root'; 
+    $password = ''; 
+    $db_name = 'account'; 
 
-<div class="box">
-<form id="validate_form" method="post">
-<div class="form-group">
-<label for="name">Full Name</label>
-<input type="text" name="name" placeholder="Enter Name" class="form-control" value="<?php if(isset($name)){ echo htmlspecialchars($name); }?>"/>
- <span class="text-danger"><?php if(!empty($name_error)){ echo $name_error; } ?></span>
-</div>
+    // Establish the connection
+    $conn = mysqli_connect($host, $username, $password, $db_name);
+    
+    if ($conn) {
+        // Connection successful
+    } else {
+        die("Connection failed: " . mysqli_error($conn));
+    }
 
+    $errors = [];
+    $fullname = $email = $password = $phone = '';
 
-<div class="form-group">
-<label for="dob">Date of Birth</label>
-<input type="date" name="dob" class="form-control" value="<?php if(isset($dob)){ echo htmlspecialchars($dob); }?>"/>
- <span class="text-danger"><?php if(!empty($dob_error)){ echo $dob_error; } ?></span>
-</div>
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        // Validate input
+        if (empty($_POST['fullname'])) {
+            $errors['fullname'] = "Full Name is required.";
+        } else {
+            $fullname = trim($_POST['fullname']);
+            if (!preg_match("/^[a-zA-Z ]*$/", $fullname)) {
+                $errors['fullname'] = "Only letters and whitespace are allowed.";
+            }
+        }
 
-<div class="form-group">
-<label for="email">Email</label>
-<input type="text" name="email" placeholder="Enter Email" class="form-control" value="<?php if(isset($email)){ echo htmlspecialchars($email); }?>"/>
-<span class="text-danger"><?php if(!empty($email_error)){ echo $email_error; } ?></span>
-</div>
+        if (empty($_POST['email'])) {
+            $errors['email'] = "Email is required.";
+        } else {
+            $email = trim($_POST['email']);
+            if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                $errors['email'] = "Invalid email format.";
+            }
+        }
 
-<div class="form-group">
- <label for="password">Password</label>
-<input type="password" name="password" placeholder="Enter Password" class="form-control" />
-<span class="text-danger"><?php if(!empty($password_error)){ echo $password_error; } ?></span>
-                    </div>
+        if (empty($_POST['password'])) {
+            $errors['password'] = "Password is required.";
+        } else {
+            $password = trim($_POST['password']);
+            if (strlen($password) < 6) {
+                $errors['password'] = "Password must be at least 6 characters.";
+            } elseif (!preg_match("/[A-Za-z]/", $password) || 
+                      !preg_match("/[0-9]/", $password) || 
+                      !preg_match("/[\W_]/", $password)) {
+                $errors['password'] = "Password must include at least one letter, one number, and one special character.";
+            }
+        }
 
-<div class="form-group">
-<label for="confirm_password">Confirm Password</label>
-<input type="password" name="confirm_password" placeholder="Confirm Password" class="form-control" />
-<span class="text-danger"><?php if(!empty($confirm_password_error)){ echo $confirm_password_error; } ?></span>
-</div>
+        if (empty($_POST['phone'])) {
+            $errors['phone'] = "Phone Number is required.";
+        } else {
+            $phone = trim($_POST['phone']);
+            if (!preg_match("/^\d{10}$/", $phone)) {
+                $errors['phone'] = "Phone number must be 10 digits.";
+            }
+        }
 
-<div class="form-group">
-<label for="mobile">Mobile No.</label>
-<input type="text" name="mobile" id="mob" placeholder="Enter Mobile" class="form-control" value="<?php if(isset($mobile)){ echo htmlspecialchars($mobile); }?>"/>
-<span class="text-danger"><?php if(!empty($mobile_error)){ echo $mobile_error; } ?></span>
-</div>
+        if (empty($errors)) {
+            // Insert data into the database
+            $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+            $sql = "INSERT INTO users (fullname, email, password, phone) VALUES (?, ?, ?, ?)";
+            $stmt = mysqli_prepare($conn, $sql);
+            mysqli_stmt_bind_param($stmt, "ssss", $fullname, $email, $hashed_password, $phone);
 
-                    
-<div class="form-group">
-<label for="id_number">ID Number</label>
-<input type="text" name="id_number" placeholder="Enter ID Number" class="form-control" value="<?php if(isset($id_number)){ echo htmlspecialchars($id_number); }?>"/>
-<span class="text-danger"><?php if(!empty($id_error)){ echo $id_error; } ?></span>
-</div>
+            if (mysqli_stmt_execute($stmt)) {
+                $msg = "Registration successful!";
+                header('location:form.php');
+            }
+            
+            else {
+                $msg = "Error: " . mysqli_error($conn);
+            }
 
-<div class="form-group">
-<label for="age">Age</label>
-<input type="number" name="age" placeholder="Enter Age" class="form-control" value="<?php if(isset($age)){ echo htmlspecialchars($age); }?>"/>
-<span class="text-danger"><?php if(!empty($age_error)){ echo $age_error; } ?></span>
-</div>
+            mysqli_stmt_close($stmt);
+        }
+    }
+    ?>
 
-<div class="form-group">
-<label for="sex">Sex</label>
-<select name="sex" class="form-control">
-<option value="">Select</option>
-<option value="Male" <?php if(isset($sex) && $sex == "Male"){ echo 'selected'; }?>>Male</option>
-<option value="Female" <?php if(isset($sex) && $sex == "Female"){ echo 'selected'; }?>>Female</option>
-</select>
-                        
-<span class="text-danger"><?php if(!empty($sex_error)){ echo $sex_error; } ?></span>
+    <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
+        <h2>LOGIN PAGE</h2>
 
-</div>
-<div class="form-group">
-<label for="country">Country</label>
-<input type="text" name="country" placeholder="Enter Country" class="form-control" value="<?php if(isset($country)){ echo htmlspecialchars($country); }?>"/>
- <span class="text-danger"><?php if(!empty($country_error)){ echo $country_error; } ?></span>
-</div>
+        <label>Full Name</label>
+        <input type="text" name="fullname" placeholder="Full Name" value="<?php echo htmlspecialchars($fullname); ?>" required>
+        <?php if (isset($errors['fullname'])) { ?>
+            <p class="error"><?php echo $errors['fullname']; ?></p>
+        <?php } ?>
 
-                    
-<div class="form-group">
-<label for="born_city">Born City</label>
-<input type="text" name="born_city" placeholder="Enter Born City" class="form-control" value="<?php if(isset($born_city)){ echo htmlspecialchars($born_city); }?>"/>
-<span class="text-danger"><?php if(!empty($born_city_error)){ echo $born_city_error; } ?></span>
-</div>
+        <label>Email</label>
+        <input type="email" name="email" placeholder="Email" value="<?php echo htmlspecialchars($email); ?>" required>
+        <?php if (isset($errors['email'])) { ?>
+            <p class="error"><?php echo $errors['email']; ?></p>
+        <?php } ?>
 
-<div class="form-group">
-<input type="submit" name="submit" value="Submit" class="btn btn-success" />
-</div>
-                    
-<p class="error"><?php if(!empty($msg)){ echo $msg; } ?></p>
-</form>
-</div>
-</div>
-</div>
+        <label>User Password</label>
+        <input type="password" name="password" placeholder="Password" required>
+        <?php if (isset($errors['password'])) { ?>
+            <p class="error"><?php echo $errors['password']; ?></p>
+        <?php } ?>
+
+        <label>Phone Number</label>
+        <input type="text" name="phone" placeholder="Phone Number" value="<?php echo htmlspecialchars($phone); ?>" required>
+        <?php if (isset($errors['phone'])) { ?>
+            <p class="error"><?php echo $errors['phone']; ?></p>
+        <?php } ?>
+
+        <?php if (isset($msg)) { ?>
+            <p class="success"><?php echo $msg; ?></p>
+        <?php } ?>
+
+        <button type="submit" class="btn btn-primary">Login</button>
+    </form>
+        
 </body>
 </html>
