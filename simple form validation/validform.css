@@ -60,8 +60,6 @@ input:focus, select:focus {
     font-size: 0.9em;
 }
 .error {
-    color: green;
+    color: red;
     font-weight: 700;
-    text-align: center;
-    margin-top: 10px;
 }

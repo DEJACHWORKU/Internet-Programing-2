@@ -1,23 +1,9 @@
 <html>
 <head>
     <title>Registration form</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
+<link rel="stylesheet" href="validform.css">
 </head>
-<style>
-    .box {
-        width: 100%;
-        max-width: 600px;
-        background-color: #f9f9f9;
-        border: 3px solid green;
-        border-radius: 5px;
-        padding: 16px;
-        margin: 0 auto;
-    }
-    .error {
-        color: green;
-        font-weight: 700;
-    }
-</style>
+
 <?php
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
