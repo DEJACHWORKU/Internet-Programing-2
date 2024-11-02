@@ -63,3 +63,12 @@ input:focus, select:focus {
     color: red;
     font-weight: 700;
 }
+.box {
+    width: 100%;
+    max-width: 600px;
+    background-color: #f9f9f9;
+    border: 3px solid green;
+    border-radius: 5px;
+    padding: 16px;
+    margin: 0 auto;
+}
