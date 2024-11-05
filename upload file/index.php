@@ -19,6 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['file'])) {
         // Attempt to move the uploaded file
         if (move_uploaded_file($_FILES["file"]["tmp_name"], $targetFile)) {
             echo "<div class='alert success'>File uploaded successfully.</div>";
+            $files = scandir($targetDir);
         } else {
             echo "<div class='alert error'>Sorry, there was an error uploading your file.</div>";
         }
@@ -31,6 +32,7 @@ if (isset($_GET['action']) && $_GET['action'] === 'delete' && isset($_GET['file'
     if (file_exists($fileToDelete)) {
         unlink($fileToDelete);
         echo "<div class='alert success'>File deleted successfully.</div>";
+        $files = scandir($targetDir);
     } else {
         echo "<div class='alert error'>File not found.</div>";
     }
@@ -44,9 +46,11 @@ if (isset($_POST['rename'])) {
     // Check if new file name already exists
     if (file_exists($newName)) {
         echo "<div class='alert error'>File with that name already exists. Please choose a different name.</div>";
+       
     } else {
         rename($oldName, $newName);
         echo "<div class='alert success'>File renamed successfully.</div>";
+        $files = scandir($targetDir);
     }
 }
 
