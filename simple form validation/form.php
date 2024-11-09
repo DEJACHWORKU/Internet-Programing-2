@@ -1,95 +1,9 @@
+
 <html>
 <head>
     <title>Registration form</title>
     <link rel="stylesheet" href="validform.css">
 </head>
-
-<?php
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
-
-$error = 0;
-
-if (isset($_REQUEST['submit'])) {
-    $name = $_REQUEST['name'];
-    $dob = $_REQUEST['dob'];
-    $email = $_REQUEST['email'];
-    $mobile = $_REQUEST['mobile'];
-    $id_number = $_REQUEST['id_number'];
-    $age = $_REQUEST['age'];
-    $sex = $_REQUEST['sex'];
-    $country = $_REQUEST['country'];
-    $born_city = $_REQUEST['born_city'];
-    $password = $_REQUEST['password'];
-    $confirm_password = $_REQUEST['confirm_password'];
-
-    if (empty($name)) {
-        $name_error = "Please enter the Name";
-        $error = 1;
-    } else if (!preg_match("/^[a-zA-Z ]*$/", $name)) {
-        $name_error = "Only letters are allowed";
-        $error = 1;
-    }
-    if (empty($dob)) {
-        $dob_error = "Please enter the Date of Birth";
-        $error = 1;
-    }
-    if (empty($email)) {
-        $email_error = "Please enter the Email Id";
-        $error = 1;
-    } else if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        $email_error = "Invalid Email Format";
-        $error = 1;
-    }
-    if (empty($mobile)) {
-        $mobile_error = "Please enter the Mobile Number";
-        $error = 1;
-    } else if (!preg_match("/^\d{10}$/", $mobile)) {
-        $mobile_error = "Mobile number must be 10 digits";
-        $error = 1;
-    }
-    if (empty($id_number)) {
-        $id_error = "Please enter the ID Number";
-        $error = 1;
-    }
-    if (empty($age)) {
-        $age_error = "Please enter the Age";
-        $error = 1;
-    } else if (!is_numeric($age) || $age <= 0) {
-        $age_error = "Age must be a positive number";
-        $error = 1;
-    }
-    if (empty($sex)) {
-        $sex_error = "Please select the Sex";
-        $error = 1;
-    }
-    if (empty($country)) {
-        $country_error = "Please enter the Country";
-        $error = 1;
-    }
-    if (empty($born_city)) {
-        $born_city_error = "Please enter the Born City";
-        $error = 1;
-    }
-    if (empty($password)) {
-        $password_error = "Please enter the Password";
-        $error = 1;
-    } else if (strlen($password) < 6) {
-        $password_error = "Password must be at least 6 characters";
-        $error = 1;
-    }
-    if ($password !== $confirm_password) {
-        $confirm_password_error = "Passwords do not match";
-        $error = 1;
-    }
-
-    if ($error == 0) {
-        $msg = "Registration successful";
-    } else {
-        $msg = "Please fill all fields correctly";
-    }
-}
-?>
 <body>
     <div class="container">
  <div class="table-responsive">
