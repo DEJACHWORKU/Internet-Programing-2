@@ -122,7 +122,7 @@ if (isset($_REQUEST['submit'])) {
 <html>
 <head>
     <title>Registration form</title>
-    <link rel="stylesheet" href="validform.css">
+    <link rel="stylesheet" href="css/validform.css">
 </head>
 <body>
     <div class="container">
