@@ -83,10 +83,7 @@ if (isset($_REQUEST['submit'])) {
         $country_error = "Please enter the Country";
         $error = 1;
     }
-    if (empty($born_city)) {
-        $born_city_error = "Please enter the Born City";
-        $error = 1;
-    }
+  
     if (empty($password)) {
         $password_error = "Please enter the Password";
         $error = 1;
@@ -102,14 +99,14 @@ if (isset($_REQUEST['submit'])) {
  
     if ($error == 0) {
       
-        $stmt = $pdo->prepare("INSERT INTO student (`full name`, `date birth`, `Email`, `password`, `confirm password`, `mobile no`, `id number`, `Age`, `sex`, `country`, `born city`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        $stmt = $pdo->prepare("INSERT INTO student (`full name`, `date birth`, `Email`, `password`, `confirm password`, `mobile no`, `id number`, `Age`, `sex`, `country`,) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?,)");
         
       
         $hashed_password = password_hash($password, PASSWORD_DEFAULT);
         
        
         try {
-            $stmt->execute([$name, $dob, $email, $hashed_password, $hashed_password, $mobile, $id_number, $age, $sex, $country, $born_city]);
+            $stmt->execute([$name, $dob, $email, $hashed_password, $hashed_password, $mobile, $id_number, $age, $sex, $country,]);
             $msg = "Registration successful";
         } catch (Exception $e) {
             $msg = "Error: " . $e->getMessage();
@@ -197,13 +194,6 @@ if (isset($_REQUEST['submit'])) {
 <label for="country">Country</label>
 <input type="text" name="country" placeholder="Enter Country" class="form-control" value="<?php if(isset($country)){ echo htmlspecialchars($country); }?>"/>
  <span class="text-danger"><?php if(!empty($country_error)){ echo $country_error; } ?></span>
-</div>
-
-                    
-<div class="form-group">
-<label for="born_city">Born City</label>
-<input type="text" name="born_city" placeholder="Enter Born City" class="form-control" value="<?php if(isset($born_city)){ echo htmlspecialchars($born_city); }?>"/>
-<span class="text-danger"><?php if(!empty($born_city_error)){ echo $born_city_error; } ?></span>
 </div>
 
 <div class="form-group">

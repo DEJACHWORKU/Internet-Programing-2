@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 09, 2024 at 03:44 PM
+-- Generation Time: Nov 16, 2024 at 08:23 AM
 -- Server version: 10.1.38-MariaDB
 -- PHP Version: 5.6.40
 
@@ -39,9 +39,15 @@ CREATE TABLE `student` (
   `id number` varchar(15) NOT NULL,
   `Age` int(3) NOT NULL,
   `sex` text NOT NULL,
-  `country` text NOT NULL,
-  `born city` text NOT NULL
+  `country` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `student`
+--
+
+INSERT INTO `student` (`id`, `full name`, `date birth`, `Email`, `password`, `confirm password`, `mobile no`, `id number`, `Age`, `sex`, `country`) VALUES
+(1, 'dejach worku tasew', '2024-10-29', 'dagiman2116@gmail.com', '$2y$10$6M3h3W85xm3o4RcAlkGT6..', '$2y$10$6M3h3W85xm3o4RcAlkGT6..', 989786756, 'ugr/10343/56', 34, 'Male', 'ethiopia');
 
 --
 -- Indexes for dumped tables
@@ -61,7 +67,7 @@ ALTER TABLE `student`
 -- AUTO_INCREMENT for table `student`
 --
 ALTER TABLE `student`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
