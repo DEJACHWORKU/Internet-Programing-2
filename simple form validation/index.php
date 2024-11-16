@@ -26,16 +26,16 @@
     }
 
     $errors = [];
-    $fullname = $email = $password = $phone = '';
+    $username = $email = $password = $phone = '';
 
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Validate input
-        if (empty($_POST['fullname'])) {
-            $errors['fullname'] = "Full Name is required.";
+        if (empty($_POST['username'])) {
+            $errors['username'] = "user Name is required.";
         } else {
-            $fullname = trim($_POST['fullname']);
-            if (!preg_match("/^[a-zA-Z ]*$/", $fullname)) {
-                $errors['fullname'] = "Only letters and whitespace are allowed.";
+            $username = trim($_POST['username']);
+            if (!preg_match("/^[a-zA-Z ]*$/", $username)) {
+                $errors['username'] = "Only letters and whitespace are allowed.";
             }
         }
 
@@ -61,21 +61,14 @@
             }
         }
 
-        if (empty($_POST['phone'])) {
-            $errors['phone'] = "Phone Number is required.";
-        } else {
-            $phone = trim($_POST['phone']);
-            if (!preg_match("/^\d{10}$/", $phone)) {
-                $errors['phone'] = "Phone number must be 10 digits.";
-            }
-        }
+    
 
         if (empty($errors)) {
             // Insert data into the database
             $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-            $sql = "INSERT INTO users (fullname, email, password, phone) VALUES (?, ?, ?, ?)";
+            $sql = "INSERT INTO users (username, email, password, ) VALUES (?, ?, ?,)";
             $stmt = mysqli_prepare($conn, $sql);
-            mysqli_stmt_bind_param($stmt, "ssss", $fullname, $email, $hashed_password, $phone);
+            mysqli_stmt_bind_param($stmt, "ssss", $username, $email, $hashed_password, $phone);
 
             if (mysqli_stmt_execute($stmt)) {
                 $msg = "Registration successful!";
@@ -94,9 +87,9 @@
     <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
         <h2>LOGIN PAGE</h2>
 
-        <label>Full Name</label>
-        <input type="text" name="fullname" placeholder="Full Name" value="<?php echo htmlspecialchars($fullname); ?>" required>
-        <?php if (isset($errors['fullname'])) { ?>
+        <label>User Name</label>
+        <input type="text" name="username" placeholder="Enter username" value="<?php echo htmlspecialchars($username); ?>" required>
+        <?php if (isset($errors['username'])) { ?>
             <p class="error"><?php echo $errors['fullname']; ?></p>
         <?php } ?>
 
@@ -112,11 +105,6 @@
             <p class="error"><?php echo $errors['password']; ?></p>
         <?php } ?>
 
-        <label>Phone Number</label>
-        <input type="text" name="phone" placeholder="Phone Number" value="<?php echo htmlspecialchars($phone); ?>" required>
-        <?php if (isset($errors['phone'])) { ?>
-            <p class="error"><?php echo $errors['phone']; ?></p>
-        <?php } ?>
 
         <?php if (isset($msg)) { ?>
             <p class="success"><?php echo $msg; ?></p>
