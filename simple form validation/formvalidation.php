@@ -34,7 +34,7 @@ if (isset($_REQUEST['submit'])) {
     $age = $_REQUEST['age'];
     $sex = $_REQUEST['sex'];
     $country = $_REQUEST['country'];
-    $born_city = $_REQUEST['born_city'];
+    
     $password = $_REQUEST['password'];
     $confirm_password = $_REQUEST['confirm_password'];
 
@@ -99,7 +99,7 @@ if (isset($_REQUEST['submit'])) {
  
     if ($error == 0) {
       
-        $stmt = $pdo->prepare("INSERT INTO student (`full name`, `date birth`, `Email`, `password`, `confirm password`, `mobile no`, `id number`, `Age`, `sex`, `country`,) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?,)");
+        $stmt = $pdo->prepare("INSERT INTO student (`full name`, `date birth`, `Email`, `password`, `confirm password`, `mobile no`, `id number`, `Age`, `sex`, `country`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
         
       
         $hashed_password = password_hash($password, PASSWORD_DEFAULT);

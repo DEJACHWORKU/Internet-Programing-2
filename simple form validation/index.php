@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LOGIN</title>
+    <title>Login</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -19,19 +19,18 @@
     // Establish the connection
     $conn = mysqli_connect($host, $username, $password, $db_name);
     
-    if ($conn) {
-        // Connection successful
-    } else {
+    if (!$conn) {
         die("Connection failed: " . mysqli_error($conn));
     }
 
     $errors = [];
-    $username = $email = $password = $phone = '';
+    $username = $email = $password = '';
+    $msg = '';
 
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Validate input
         if (empty($_POST['username'])) {
-            $errors['username'] = "user Name is required.";
+            $errors['username'] = "User Name is required.";
         } else {
             $username = trim($_POST['username']);
             if (!preg_match("/^[a-zA-Z ]*$/", $username)) {
@@ -61,57 +60,72 @@
             }
         }
 
-    
-
+        // If there are no errors, proceed with the user validation/creation
         if (empty($errors)) {
-            // Insert data into the database
-            $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-            $sql = "INSERT INTO users (username, email, password, ) VALUES (?, ?, ?,)";
+            // Check if the user already exists
+            $sql = "SELECT * FROM users WHERE username = ? AND email = ?";
             $stmt = mysqli_prepare($conn, $sql);
-            mysqli_stmt_bind_param($stmt, "ssss", $username, $email, $hashed_password, $phone);
+            mysqli_stmt_bind_param($stmt, "ss", $username, $email);
+            mysqli_stmt_execute($stmt);
+            $result = mysqli_stmt_get_result($stmt);
 
-            if (mysqli_stmt_execute($stmt)) {
-                $msg = "Registration successful!";
-                header('location:formvalidation.php');
-            }
-            
-            else {
-                $msg = "Error: " . mysqli_error($conn);
-            }
+            if (mysqli_num_rows($result) > 0) {
+                // User exists, verify the password
+                $user = mysqli_fetch_assoc($result);
+                if (password_verify($password, $user['password'])) {
+                    // Successful login, redirect to formvalidation.php
+                    header('Location: formvalidation.php');
+                    exit();
+                } else {
+                    $msg = "Invalid password.";
+                }
+            } else {
+                // New user, create the account
+                $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+                $insert_sql = "INSERT INTO users (username, email, password) VALUES (?, ?, ?)";
+                $insert_stmt = mysqli_prepare($conn, $insert_sql);
+                mysqli_stmt_bind_param($insert_stmt, "sss", $username, $email, $hashed_password);
 
+                if (mysqli_stmt_execute($insert_stmt)) {
+                    // Account created, redirect to formvalidation.php
+                    header('Location: formvalidation.php');
+                    exit();
+                } else {
+                    $msg = "Error creating user.";
+                }
+                mysqli_stmt_close($insert_stmt);
+            }
             mysqli_stmt_close($stmt);
         }
     }
     ?>
 
     <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
-        <h2>LOGIN PAGE</h2>
+        <h2>Login Page</h2>
 
-        <label>User Name</label>
+        <label for="username">User Name</label>
         <input type="text" name="username" placeholder="Enter username" value="<?php echo htmlspecialchars($username); ?>" required>
         <?php if (isset($errors['username'])) { ?>
-            <p class="error"><?php echo $errors['fullname']; ?></p>
+            <p class="error"><?php echo $errors['username']; ?></p>
         <?php } ?>
 
-        <label>Email</label>
+        <label for="email">Email</label>
         <input type="email" name="email" placeholder="Email" value="<?php echo htmlspecialchars($email); ?>" required>
         <?php if (isset($errors['email'])) { ?>
             <p class="error"><?php echo $errors['email']; ?></p>
         <?php } ?>
 
-        <label>User Password</label>
+        <label for="password">Password</label>
         <input type="password" name="password" placeholder="Password" required>
         <?php if (isset($errors['password'])) { ?>
             <p class="error"><?php echo $errors['password']; ?></p>
         <?php } ?>
 
-
-        <?php if (isset($msg)) { ?>
-            <p class="success"><?php echo $msg; ?></p>
+        <?php if (!empty($msg)) { ?>
+            <p class="error"><?php echo $msg; ?></p>
         <?php } ?>
 
         <button type="submit" class="btn btn-primary">Login</button>
     </form>
-        
 </body>
 </html>
