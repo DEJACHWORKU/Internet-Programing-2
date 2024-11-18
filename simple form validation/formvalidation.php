@@ -115,6 +115,13 @@ if (isset($_REQUEST['submit'])) {
         $msg = "Please fill all fields correctly";
     }
 }
+if (isset($_REQUEST['logout'])) {
+ 
+    session_start();
+    session_destroy();
+    header("Location: index.php");
+    exit;
+}
 ?>
 <html>
 <head>
@@ -202,6 +209,10 @@ if (isset($_REQUEST['submit'])) {
                     
 <p class="error"><?php if(!empty($msg)){ echo $msg; } ?></p>
 </form>
+
+<form method="post">
+<input type="submit" name="logout" value="Log Out" class="btn btn-danger" />
+                </form>
 </div>
 </div>
 </div>
