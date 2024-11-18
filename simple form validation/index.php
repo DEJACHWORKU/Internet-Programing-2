@@ -8,6 +8,8 @@
 </head>
 <body>
     <?php
+
+session_start(); 
     error_reporting(E_ALL);
     ini_set('display_errors', 1);
 
@@ -88,6 +90,9 @@
 
                 if (mysqli_stmt_execute($insert_stmt)) {
                     // Account created, redirect to formvalidation.php
+
+                    $_SESSION['username'] = $username; // Store username in session
+                    setcookie('username', $username, time() + 3600, '/'); 
                     header('Location: formvalidation.php');
                     exit();
                 } else {
@@ -101,7 +106,7 @@
     ?>
 
     <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
-        <h2>Login Page</h2>
+        <h2>SIGNUP Page</h2>
 
         <label for="username">User Name</label>
         <input type="text" name="username" placeholder="Enter username" value="<?php echo htmlspecialchars($username); ?>" required>
@@ -125,7 +130,7 @@
             <p class="error"><?php echo $msg; ?></p>
         <?php } ?>
 
-        <button type="submit" class="btn btn-primary">Login</button>
+        <button type="submit" class="btn btn-primary">SIGNUP</button>
     </form>
 </body>
 </html>
