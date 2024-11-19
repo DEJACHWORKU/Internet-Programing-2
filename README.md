@@ -1,4 +1,5 @@
-![content-management-system](https://github.com/user-attachments/assets/91284130-c49b-4e33-9175-59389bca4819)
+![content-management-system (1)](https://github.com/user-attachments/assets/c09f266d-f141-4f44-ab3b-7f2bafd94fd4)
+
 ##A Content Management System (CMS) 
 
 is a software application or set of related programs used to create, manage, and modify digital content. It allows users, often without extensive technical knowledge, to publish and manage website content easily. Here are some key aspects of a CMS:
