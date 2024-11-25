@@ -3,6 +3,7 @@
 These code establishes a connection to a MySQL database and processes user input from a registration form.
 It validates the input data, handles error messages, and stores the data in the database if all validations pass.
 ##WHAT IS THE FUNCTIONALLITY
+![Screenshot 2024-11-20 091009](https://github.com/user-attachments/assets/3e50a68f-0edf-4380-a68f-8f76ef5d92be)
 ## signup page
 # Overview
 The script allows users to log in with their username and email, while also providing functionality to create a new user if they don't already exist. 
@@ -21,7 +22,7 @@ You can further enhance it by adding features such as password resets, email ver
 
 
 
-
+![Screenshot 2024-11-20 091847](https://github.com/user-attachments/assets/c347dab2-571a-4097-9e14-e180765e49c3)
 # simple student registration form the secon form of registration
 # Overview
 These code establishes a connection to a MySQL database and processes user input from a registration form. It validates the input data, handles error messages, and stores the data in the database if all validations pass.
