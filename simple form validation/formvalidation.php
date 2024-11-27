@@ -107,7 +107,8 @@ if (isset($_REQUEST['submit'])) {
        
         try {
             $stmt->execute([$name, $dob, $email, $hashed_password, $hashed_password, $mobile, $id_number, $age, $sex, $country,]);
-            $msg = "Registration successful";
+            $msg = "Registration successful. Redirecting...";
+            $redirect = true;
         } catch (Exception $e) {
             $msg = "Error: " . $e->getMessage();
         }
@@ -115,18 +116,22 @@ if (isset($_REQUEST['submit'])) {
         $msg = "Please fill all fields correctly";
     }
 }
-if (isset($_REQUEST['logout'])) {
- 
-    session_start();
-    session_destroy();
-    header("Location: index.php");
-    exit;
-}
+
 ?>
 <html>
 <head>
     <title>Registration form</title>
     <link rel="stylesheet" href="css/validform.css">
+    
+    
+    <script>
+function redirectToUpload() {
+    setTimeout(function() {
+    window.location.href = 'upload.php';
+    }, 3000);
+        }
+    </script>
+    
 </head>
 <body>
     <div class="container">
@@ -207,12 +212,17 @@ if (isset($_REQUEST['logout'])) {
 <input type="submit" name="submit" value="Submit" class="btn btn-success" />
 </div>
                     
-<p class="error"><?php if(!empty($msg)){ echo $msg; } ?></p>
+<p class="error">
+    <?php 
+    if(!empty($msg)){ echo $msg; } ?></p>
+<p class="error"><?php if(!empty($msg)){ echo $msg; 
+                        if (isset($redirect) && $redirect) {
+                            echo '<script>redirectToUpload();</script>'; 
+                        }} ?>
+                        </p>
 </form>
 
-<form method="post">
-<input type="submit" name="logout" value="Log Out" class="btn btn-danger" />
-                </form>
+
 </div>
 </div>
 </div>

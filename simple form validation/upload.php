@@ -77,6 +77,14 @@ if (isset($_POST['write'])) {
         echo "<div class='alert error'>File not found.</div>";
     }
 }
+
+if (isset($_REQUEST['logout'])) {
+ 
+    session_start();
+    session_destroy();
+    header("Location: index.php");
+    exit;
+}
 ?>
 
 <!DOCTYPE html>
@@ -89,7 +97,7 @@ if (isset($_POST['write'])) {
 </head>
 <body>
     <div class="container">
-        <h1>File Upload internet program-2 second assignment</h1>
+        <h1>Upload Student Document</h1>
         <form action="" method="post" enctype="multipart/form-data" class="upload-form">
  <input type="file" name="file" required>
  <button type="submit">Upload</button>
@@ -138,6 +146,9 @@ if (isset($_POST['write'])) {
             <h2>File Content</h2>
             <pre><?php echo htmlspecialchars($content); ?></pre>
         <?php endif; ?>
+        <form method="post">
+<input type="submit" name="logout" value="Log Out" class="btn btn-danger" />
+                </form>
     </div>
 </body>
 </html>

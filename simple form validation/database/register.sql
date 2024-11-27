@@ -1,14 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.5
+-- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 16, 2024 at 08:23 AM
--- Server version: 10.1.38-MariaDB
--- PHP Version: 5.6.40
+-- Generation Time: Nov 27, 2024 at 10:13 PM
+-- Server version: 10.4.32-MariaDB
+-- PHP Version: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -30,7 +29,7 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `student` (
   `id` int(11) NOT NULL,
-  `full name` varchar(50) NOT NULL,
+  `full name` text NOT NULL,
   `date birth` varchar(20) NOT NULL,
   `Email` varchar(45) NOT NULL,
   `password` varchar(30) NOT NULL,
@@ -40,14 +39,18 @@ CREATE TABLE `student` (
   `Age` int(3) NOT NULL,
   `sex` text NOT NULL,
   `country` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Dumping data for table `student`
 --
 
 INSERT INTO `student` (`id`, `full name`, `date birth`, `Email`, `password`, `confirm password`, `mobile no`, `id number`, `Age`, `sex`, `country`) VALUES
-(1, 'dejach worku tasew', '2024-10-29', 'dagiman2116@gmail.com', '$2y$10$6M3h3W85xm3o4RcAlkGT6..', '$2y$10$6M3h3W85xm3o4RcAlkGT6..', 989786756, 'ugr/10343/56', 34, 'Male', 'ethiopia');
+(10, 'writeyournamehereplease', '2024-07-02', 'dagiman2116@gmail.com', '$2y$10$t66Ua6pJd1Iri9L.4kFL9uj', '$2y$10$t66Ua6pJd1Iri9L.4kFL9uj', 989786756, 'ugr/10343/56', 45, 'Male', 'Ethiopia'),
+(11, 'desalegnbelachewalene', '2024-11-01', 'ketemmdaba@gmail.com', '$2y$10$TvrIvgvWKeHOQjjZdmC7OeO', '$2y$10$TvrIvgvWKeHOQjjZdmC7OeO', 989786756, 'ugr/10343/56', 56, 'Male', 'Ethiopia'),
+(12, 'desalegnbelachewalene', '2024-11-01', 'ketemmdaba@gmail.com', '$2y$10$keJQPBfAk2EMxKZsHnudFOf', '$2y$10$keJQPBfAk2EMxKZsHnudFOf', 989786756, 'ugr/10343/56', 56, 'Male', 'Ethiopia'),
+(13, 'derese aba', '2024-10-31', 'wehal32@gmail.com', '$2y$10$9nePAqaVM/WobpsOc7bpDuI', '$2y$10$9nePAqaVM/WobpsOc7bpDuI', 989786756, 'ugr/10343/56', 23, 'Female', 'Ethiopia'),
+(14, 'derese aba', '2024-10-31', 'wehal32@gmail.com', '$2y$10$0SGbopWzPUUD8FNX0gJt9.q', '$2y$10$0SGbopWzPUUD8FNX0gJt9.q', 989786756, 'ugr/10343/56', 23, 'Female', 'Ethiopia');
 
 --
 -- Indexes for dumped tables
@@ -67,7 +70,7 @@ ALTER TABLE `student`
 -- AUTO_INCREMENT for table `student`
 --
 ALTER TABLE `student`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

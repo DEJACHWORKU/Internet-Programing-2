@@ -81,7 +81,7 @@
 
                 if (mysqli_stmt_execute($insert_stmt)) {
                     $_SESSION['username'] = $username; // Store username in session
-                    header('Location: signin.php');
+                    header('Location: formvalidation.php');
                     exit();
                 } else {
                     $msg = "Error creating user.";
